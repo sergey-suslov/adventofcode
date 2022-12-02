@@ -40,9 +40,21 @@ defmodule Task1Test do
     assert Task1.solve(list_of_str) == 24000
   end
 
+  test "test solve small part two" do
+    list_of_str = get_file_stream("test/s.txt")
+
+    assert Task1.solve_two(Enum.to_list(list_of_str)) == 45000
+  end
+
   test "test solve big" do
     list_of_str = get_file_stream("test/b.txt")
 
     assert Task1.solve(list_of_str) == 72017
+  end
+
+  test "test solve big part two" do
+    list_of_str = get_file_stream("test/b.txt")
+
+    assert Task1.solve_two(list_of_str) == 72017
   end
 end
