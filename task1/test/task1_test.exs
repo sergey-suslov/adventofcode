@@ -11,16 +11,38 @@ defmodule Task1Test do
   @spec get_ints_from_file(charlist()) :: list()
   def get_ints_from_file(filename) do
     get_file_stream(filename)
-    |> Enum.map(&String.trim/1)
+    |> Enum.filter(fn e -> e != "\n" end)
     |> Enum.map(&Integer.parse/1)
     |> Enum.map(&elem(&1, 0))
     |> Enum.to_list()
   end
 
   test "parse file" do
-    list_of_nums =
-      get_ints_from_file("test/s.txt")
+    list_of_nums = get_ints_from_file("test/s.txt")
 
-    assert list_of_nums == [1000, 2000, 3000]
+    assert list_of_nums == [
+             1000,
+             2000,
+             3000,
+             4000,
+             5000,
+             6000,
+             7000,
+             8000,
+             9000,
+             10000
+           ]
+  end
+
+  test "test solve small" do
+    list_of_str = get_file_stream("test/s.txt")
+
+    assert Task1.solve(list_of_str) == 24000
+  end
+
+  test "test solve big" do
+    list_of_str = get_file_stream("test/b.txt")
+
+    assert Task1.solve(list_of_str) == 72017
   end
 end
