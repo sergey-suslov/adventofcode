@@ -43,8 +43,6 @@ defmodule Task1 do
   def solve_two(str_elems) do
     sums = chunk_str_by_spaces(str_elems) |> Enum.map(&Enum.sum/1)
 
-    IO.inspect(sums)
-
     reduce = fn el, acc ->
       case acc do
         [a, b, c] when c < el -> [a, b, el]
@@ -56,6 +54,6 @@ defmodule Task1 do
       |> Enum.sort(:desc)
     end
 
-    Enum.reduce(sums, [], reduce) |> IO.inspect() |> Enum.sum()
+    Enum.reduce(sums, [], reduce) |> Enum.sum()
   end
 end

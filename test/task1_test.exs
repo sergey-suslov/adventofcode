@@ -55,6 +55,6 @@ defmodule Task1Test do
   test "test solve big part two" do
     list_of_str = get_file_stream("test/b.txt")
 
-    assert Task1.solve_two(list_of_str) == 72017
+    assert Task1.solve_two(list_of_str) == 212520
   end
 end
