@@ -18,7 +18,7 @@ defmodule Task1Test do
   end
 
   test "parse file" do
-    list_of_nums = get_ints_from_file("test/s.txt")
+    list_of_nums = get_ints_from_file("test/1_s.txt")
 
     assert list_of_nums == [
              1000,
@@ -35,25 +35,25 @@ defmodule Task1Test do
   end
 
   test "test solve small" do
-    list_of_str = get_file_stream("test/s.txt")
+    list_of_str = get_file_stream("test/1_s.txt")
 
     assert Task1.solve(list_of_str) == 24000
   end
 
   test "test solve small part two" do
-    list_of_str = get_file_stream("test/s.txt")
+    list_of_str = get_file_stream("test/1_s.txt")
 
     assert Task1.solve_two(Enum.to_list(list_of_str)) == 45000
   end
 
   test "test solve big" do
-    list_of_str = get_file_stream("test/b.txt")
+    list_of_str = get_file_stream("test/1_b.txt")
 
     assert Task1.solve(list_of_str) == 72017
   end
 
   test "test solve big part two" do
-    list_of_str = get_file_stream("test/b.txt")
+    list_of_str = get_file_stream("test/1_b.txt")
 
     assert Task1.solve_two(list_of_str) == 212520
   end
