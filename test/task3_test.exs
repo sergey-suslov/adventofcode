@@ -14,11 +14,11 @@ defmodule Task3Test do
     assert Task3.solve(list_of_str) == 157
   end
 
-  # test "test solve small part two" do
-  #   list_of_str = get_file_stream("test/3_s.txt")
+  test "test solve small part two" do
+    list_of_str = get_file_stream("test/3_s.txt")
 
-  #   assert Task3.solve_two(Enum.to_list(list_of_str)) == 13
-  # end
+    assert Task3.solve_two(Enum.to_list(list_of_str)) == 70
+  end
 
   test "test solve big" do
     list_of_str = get_file_stream("test/3_b.txt")
@@ -26,9 +26,9 @@ defmodule Task3Test do
     assert Task3.solve(list_of_str) == 7980
   end
 
-  # test "test solve big part two" do
-  #   list_of_str = get_file_stream("test/3_b.txt")
+  test "test solve big part two" do
+    list_of_str = get_file_stream("test/3_b.txt")
 
-  #   assert Task3.solve_two(list_of_str) == 212520
-  # end
+    assert Task3.solve_two(list_of_str) == 2881
+  end
 end

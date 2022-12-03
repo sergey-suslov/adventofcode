@@ -79,6 +79,17 @@ defmodule Task3 do
     |> Enum.sum()
   end
 
+  defp find_common_item([a, b, c]) do
+    MapSet.intersection(MapSet.new(a), MapSet.new(b))
+    |> MapSet.intersection(MapSet.new(c))
+    |> Enum.to_list()
+  end
+
   def solve_two(str_elems) do
+    Enum.map(str_elems, &String.split(&1, "", trim: true))
+    |> Enum.chunk_every(3)
+    |> Enum.map(&find_common_item/1)
+    |> Enum.map(&calculate_score/1)
+    |>Enum.sum()
   end
 end
