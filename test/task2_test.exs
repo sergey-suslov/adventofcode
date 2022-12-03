@@ -11,24 +11,24 @@ defmodule Task2Test do
   test "test solve small" do
     list_of_str = get_file_stream("test/2_s.txt")
 
-    assert Task2.solve(list_of_str) == 24000
+    assert Task2.solve(list_of_str) == 15
   end
 
-  # test "test solve small part two" do
-  #   list_of_str = get_file_stream("test/2_s.txt")
+  test "test solve small part two" do
+    list_of_str = get_file_stream("test/2_s.txt")
 
-  #   assert Task2.solve_two(Enum.to_list(list_of_str)) == 45000
-  # end
+    assert Task2.solve_two(Enum.to_list(list_of_str)) == 12
+  end
 
   test "test solve big" do
     list_of_str = get_file_stream("test/2_b.txt")
 
-    assert Task2.solve(list_of_str) == 72017
+    assert Task2.solve(list_of_str) == 13005
   end
 
-  # test "test solve big part two" do
-  #   list_of_str = get_file_stream("test/b.txt")
+  test "test solve big part two" do
+    list_of_str = get_file_stream("test/2_b.txt")
 
-  #   assert Task2.solve_two(list_of_str) == 212520
-  # end
+    assert Task2.solve_two(list_of_str) == 212520
+  end
 end
