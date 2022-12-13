@@ -61,12 +61,6 @@ fn get_signal_strength(cycle: isize, value: isize) -> Option<isize> {
     if cycle != 20 && cycle != 60 && cycle != 100 && cycle != 140 && cycle != 180 && cycle != 220 {
         return None;
     }
-    println!(
-        "cycle: {}, value: {}, mult: {}",
-        cycle,
-        value,
-        cycle * value
-    );
     Some(cycle * value)
 }
 
@@ -78,22 +72,23 @@ fn parse_file_in_strings() -> Result<Vec<String>> {
         .collect();
     Ok(list)
 }
-fn parse_command(command: &String) -> Command {
-    match command.as_str() {
+
+fn parse_command(command: &str) -> Command {
+    match command {
         "noop" => Command::Noop,
         add_string => {
             let (_, add_value_str) = add_string.split_at(5);
-            println!("{:?}", add_value_str);
             Command::Add(add_value_str.parse::<isize>().unwrap())
         }
     }
 }
 fn main() {
     let parsed = parse_file_in_strings().unwrap();
-    println!("{:?}", parsed);
 
-    let commands = parsed.iter().map(parse_command).collect::<Vec<Command>>();
-    println!("{:?}", commands);
+    let commands = parsed
+        .iter()
+        .map(|c| parse_command(c))
+        .collect::<Vec<Command>>();
 
     let apply = |tube: CathodTube, command: &Command| -> CathodTube {
         CathodTube::apply_command(&tube, command)
