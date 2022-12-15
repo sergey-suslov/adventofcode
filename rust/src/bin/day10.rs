@@ -26,48 +26,36 @@ impl CathodTube {
         command: &Command,
         sprite: &mut Vec<char>,
     ) -> CathodTube {
+        let mut update_sprite = |x: isize, cycle: isize| {
+            let shift = cycle % 40;
+            let draw_pixel = x.abs_diff(shift) <= 1;
+            sprite.push(match draw_pixel {
+                true => '#',
+                false => '.',
+            });
+        };
         match command {
             Command::Add(step) => {
                 let mut tube = cathod_tube.clone();
                 for _ in 0..2 {
-                    let shift = cathod_tube.cycle % 40;
-                    let draw_pixel = cathod_tube.value.abs_diff(shift) <= 1;
-                    sprite.push(match draw_pixel {
-                        true => '#',
-                        false => '.',
-                    });
+                    update_sprite(tube.value, tube.cycle);
 
-                    let cycle = tube.cycle + 1;
-                    let new_signal = tube.signal_strength
-                        + get_signal_strength(cycle, cathod_tube.value).unwrap_or(0);
-
-                    tube = CathodTube {
-                        value: cathod_tube.value,
-                        signal_strength: new_signal,
-                        cycle,
-                    };
+                    tube.cycle += 1;
+                    tube.signal_strength +=
+                        get_signal_strength(tube.cycle, cathod_tube.value).unwrap_or(0);
                 }
-                CathodTube {
-                    value: tube.value + step,
-                    signal_strength: tube.signal_strength,
-                    cycle: tube.cycle,
-                }
+                tube.value += step;
+                tube
             }
             Command::Noop => {
-                let shift = cathod_tube.cycle % 40;
-                let draw_pixel = cathod_tube.value.abs_diff(shift) <= 2;
-                sprite.push(match draw_pixel {
-                    true => '#',
-                    false => '.',
-                });
-                let cycle = cathod_tube.cycle + 1;
-                let new_signal = cathod_tube.signal_strength
-                    + get_signal_strength(cycle, cathod_tube.value).unwrap_or(0);
+                update_sprite(cathod_tube.value, cathod_tube.cycle);
 
                 CathodTube {
                     value: cathod_tube.value,
-                    signal_strength: new_signal,
-                    cycle,
+                    signal_strength: cathod_tube.signal_strength
+                        + get_signal_strength(cathod_tube.cycle + 1, cathod_tube.value)
+                            .unwrap_or(0),
+                    cycle: cathod_tube.cycle + 1,
                 }
             }
         }
@@ -108,7 +96,6 @@ fn main() {
         .collect::<Vec<Command>>();
 
     let mut sprite: Vec<char> = vec![];
-
 
     let res = commands.iter().fold(CathodTube::init(), |tube, command| {
         CathodTube::apply_command(&tube, command, &mut sprite)
