@@ -21,11 +21,22 @@ impl CathodTube {
             cycle: 0,
         }
     }
-    fn apply_command(cathod_tube: &CathodTube, command: &Command) -> CathodTube {
+    fn apply_command(
+        cathod_tube: &CathodTube,
+        command: &Command,
+        sprite: &mut Vec<char>,
+    ) -> CathodTube {
         match command {
             Command::Add(step) => {
                 let mut tube = cathod_tube.clone();
                 for _ in 0..2 {
+                    let shift = cathod_tube.cycle % 40;
+                    let draw_pixel = cathod_tube.value.abs_diff(shift) <= 1;
+                    sprite.push(match draw_pixel {
+                        true => '#',
+                        false => '.',
+                    });
+
                     let cycle = tube.cycle + 1;
                     let new_signal = tube.signal_strength
                         + get_signal_strength(cycle, cathod_tube.value).unwrap_or(0);
@@ -43,6 +54,12 @@ impl CathodTube {
                 }
             }
             Command::Noop => {
+                let shift = cathod_tube.cycle % 40;
+                let draw_pixel = cathod_tube.value.abs_diff(shift) <= 2;
+                sprite.push(match draw_pixel {
+                    true => '#',
+                    false => '.',
+                });
                 let cycle = cathod_tube.cycle + 1;
                 let new_signal = cathod_tube.signal_strength
                     + get_signal_strength(cycle, cathod_tube.value).unwrap_or(0);
@@ -90,12 +107,20 @@ fn main() {
         .map(|c| parse_command(c))
         .collect::<Vec<Command>>();
 
-    let apply = |tube: CathodTube, command: &Command| -> CathodTube {
-        CathodTube::apply_command(&tube, command)
-    };
+    let mut sprite: Vec<char> = vec![];
 
-    let res = commands
-        .iter()
-        .fold::<CathodTube, fn(CathodTube, &Command) -> CathodTube>(CathodTube::init(), apply);
+
+    let res = commands.iter().fold(CathodTube::init(), |tube, command| {
+        CathodTube::apply_command(&tube, command, &mut sprite)
+    });
+
     println!("{:?}", res);
+    let sprite_foratted = sprite.chunks(40).into_iter().collect::<Vec<&[char]>>();
+    for row in sprite_foratted {
+        let mut string = String::from("");
+        for char in row {
+            string.push(*char);
+        }
+        println!("{:?}", string);
+    }
 }
