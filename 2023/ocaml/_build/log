@@ -1,0 +1,23 @@
+# dune exec ocaml
+# OCAMLPARAM: unset
+# Shared cache: disabled
+# Shared cache location: /Users/sergeysuslov/.cache/dune/db
+# Workspace root: /Users/sergeysuslov/personal/adventofcode/2023/ocaml
+# Auto-detected concurrency: 10
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; installed_env =
+#      map
+#        { "INSIDE_DUNE" :
+#            "/Users/sergeysuslov/personal/adventofcode/2023/ocaml/_build/default"
+#        ; "OCAML_COLOR" : "always"
+#        ; "OPAMCOLOR" : "always"
+#        }
+#  ; instrument_with = []
+#  }
+$ /Users/sergeysuslov/.opam/default/bin/ocamlc.opt -config > /var/folders/7l/vjhp76mx2qj6f69wlsyl92t00000gn/T/dune_19cd55_output
